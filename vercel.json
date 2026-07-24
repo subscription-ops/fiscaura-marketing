@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/app/:path*", "destination": "https://app.fiscaura.in/app/:path*" },
+    { "source": "/auth/:path*", "destination": "https://app.fiscaura.in/auth/:path*" },
+    { "source": "/portal/:path*", "destination": "https://app.fiscaura.in/portal/:path*" }
+  ]
+}
