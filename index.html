@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>FiscAura — Accounting that runs itself | AI accounting for Indian businesses</title>
+<meta name="description" content="FiscAura parses your bills, reads your bank statements, categorises every transaction and keeps GST filing-ready — while Arth explains what it means. AI drafts, you approve, the books happen.">
+<link rel="canonical" href="https://fiscaura.in/">
+<meta name="theme-color" content="#F6F3EA">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FiscAura">
+<meta property="og:title" content="FiscAura — Accounting that runs itself">
+<meta property="og:description" content="AI-native accounting for Indian businesses. Bill parsing, bank ingestion, GST-ready books, and Arth — the intelligence that notices what a sharp CA would.">
+<meta property="og:url" content="https://fiscaura.in/">
+<meta property="og:image" content="https://fiscaura.in/assets/fiscaura-logo.png">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="assets/fiscaura-logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  body { margin:0; background:#F6F3EA; color:#12251A; font-family:'Plus Jakarta Sans',sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:#0E5A2F; text-decoration:none; }
+  a:hover { color:#B08A20; }
+  .navlink:hover { color:#12251A !important; }
+  .btn-dark:hover { background:#12251A !important; color:#FFFFFF !important; }
+  .btn-outline:hover { border-color:#12251A !important; color:#12251A !important; }
+  @keyframes fisPulse { 0%,100% { opacity:0.35; } 50% { opacity:1; } }
+  @keyframes fisFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-7px); } }
+  @keyframes fisFloat2 { 0%,100% { transform:translateY(0); } 50% { transform:translateY(6px); } }
+  @keyframes fisRipple { from { transform:scale(1); } to { transform:scale(1.06); } }
+  @keyframes fisDash { to { stroke-dashoffset:-24; } }
+  @keyframes fisGlow { 0%,100% { opacity:0.2; } 50% { opacity:0.9; } }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://fiscaura.in/#org",
+      "name": "FiscAura",
+      "url": "https://fiscaura.in/",
+      "logo": "https://fiscaura.in/assets/fiscaura-logo.png",
+      "description": "The intelligent finance platform for Indian businesses — working towards fully autonomous accounting.",
+      "areaServed": "IN"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "FiscAura",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "AI-native accounting: bill parsing, bank statement ingestion, GST/e-Invoicing/e-Way Bills/TDS, and Arth — an assistant that surfaces anomalies and cash-flow risks.",
+      "offers": {
+        "@type": "Offer",
+        "price": "1800",
+        "priceCurrency": "INR",
+        "description": "Starter plan, per month (GST extra). 14-day free trial."
+      },
+      "publisher": { "@id": "https://fiscaura.in/#org" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- NAV -->
+<header style="position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(246,243,234,0.92); backdrop-filter:blur(10px); border-bottom:1px solid #E7E2D3;">
+  <div style="max-width:1140px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+    <a href="/" style="display:flex; align-items:center; gap:9px;">
+      <img src="assets/fiscaura-logo.png" alt="FiscAura" width="28" height="28" style="object-fit:contain;">
+      <span style="font-weight:700; font-size:17px; letter-spacing:-0.01em; color:#12251A;">FiscAura</span>
+    </a>
+    <nav style="display:flex; align-items:center; gap:26px; font-weight:500; font-size:14px;">
+      <a class="navlink" href="#autopilot" style="color:#3E4A42;">Autopilot</a>
+      <a class="navlink" href="#arth" style="color:#3E4A42;">Arth</a>
+      <a class="navlink" href="#mcp" style="color:#3E4A42;">Claude &amp; ChatGPT</a>
+      <a class="navlink" href="#platform" style="color:#3E4A42;">Platform</a>
+      <a class="navlink" href="#pricing" style="color:#3E4A42;">Pricing</a>
+      <a class="navlink" href="about.html" style="color:#3E4A42;">About</a>
+      <a class="navlink" href="contact.html" style="color:#3E4A42;">Contact</a>
+      <a class="btn-dark" href="https://app.fiscaura.in/app" style="background:#0E5A2F; color:#FFFFFF; font-weight:600; padding:8px 16px; border-radius:8px;">Start free</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section aria-label="Hero" style="padding-top:64px; background:#F6F3EA; position:relative; overflow:hidden;">
+  <div style="position:absolute; left:50%; top:420px; transform:translateX(-50%); width:900px; height:900px; border-radius:50%; border:1px solid rgba(14,90,47,0.08); pointer-events:none;"></div>
+  <div style="position:absolute; left:50%; top:520px; transform:translateX(-50%); width:1300px; height:1300px; border-radius:50%; border:1px solid rgba(14,90,47,0.06); pointer-events:none;"></div>
+  <div style="max-width:820px; margin:0 auto; padding:84px 24px 0; text-align:center; position:relative;">
+    <div style="display:inline-flex; align-items:center; gap:8px; border:1px solid #DCD5C0; border-radius:999px; padding:6px 14px; background:#FFFFFF; margin-bottom:24px;">
+      <span style="width:7px; height:7px; background:#E9B949; display:inline-block; border-radius:2px;"></span>
+      <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.14em; color:#5C665E;">TOWARDS AUTONOMOUS FINANCE</span>
+    </div>
+    <h1 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(48px,6.2vw,80px); line-height:0.98; letter-spacing:-0.01em; margin:0; text-wrap:pretty;">Accounting that<br><span style="color:#0E5A2F; font-style:italic;">runs itself.</span></h1>
+    <p style="font-size:17.5px; line-height:1.6; color:#3E4A42; margin:22px auto 0; max-width:540px;">FiscAura parses your bills, reads your bank statements, categorises every transaction, and keeps GST filing-ready — while Arth explains what it means. You approve. The books happen.</p>
+    <div style="display:flex; gap:12px; margin-top:30px; flex-wrap:wrap; justify-content:center;">
+      <a class="btn-dark" href="https://app.fiscaura.in/app" style="background:#0E5A2F; color:#FFFFFF; font-weight:600; font-size:15px; padding:13px 28px; border-radius:8px;">Start free — 14 days</a>
+      <a class="btn-outline" href="#autopilot" style="color:#12251A; font-weight:600; font-size:15px; padding:13px 24px; border:1px solid #C9C2AC; border-radius:8px; background:#FFFFFF;">See the autopilot</a>
+    </div>
+    <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:26px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:#0E5A2F; min-height:18px;">
+      <span style="width:6px; height:6px; border-radius:50%; background:#178A43; animation:fisPulse 2.4s infinite;"></span>
+      <span id="hero-tick" style="opacity:1; transition:opacity 0.3s;">autopilot: parsed xyz-logistics-june.pdf → bill drafted · 96% confidence</span>
+    </div>
+  </div>
+  <div style="height:300px;"></div>
+</section>
+
+<!-- DARK BAND: scallop wave + autopilot + arth -->
+<div style="background:#0F2418; position:relative;">
+  <svg viewBox="0 0 1200 28" preserveAspectRatio="none" style="display:block; width:100%; height:28px; position:relative; z-index:1;" aria-hidden="true">
+    <path fill="#F6F3EA" d="M0,0 H1200 V14 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 a30,14 0 0 1 -60,0 Z"></path>
+  </svg>
+  <div style="position:absolute; inset:0; overflow:hidden; pointer-events:none;">
+    <div style="position:absolute; left:-180px; bottom:-220px; width:640px; height:640px; border-radius:50%; border:1px solid rgba(233,237,230,0.07); animation:fisRipple 9s ease-in-out infinite alternate;"></div>
+    <div style="position:absolute; left:-100px; bottom:-140px; width:480px; height:480px; border-radius:50%; border:1px solid rgba(233,237,230,0.07);"></div>
+    <div style="position:absolute; right:-160px; top:280px; width:560px; height:560px; border-radius:50%; border:1px solid rgba(233,185,73,0.09); animation:fisRipple 11s ease-in-out infinite alternate;"></div>
+    <div style="position:absolute; right:-80px; top:360px; width:400px; height:400px; border-radius:50%; border:1px solid rgba(233,185,73,0.07);"></div>
+  </div>
+
+  <!-- Bridging app mock -->
+  <section id="autopilot" aria-label="Autopilot" style="position:relative;">
+    <div style="max-width:760px; margin:-300px auto 0; padding:0 24px; position:relative;">
+      <div style="border:1px solid #E0DAC7; border-radius:14px; overflow:hidden; background:#FFFFFF; box-shadow:0 32px 80px -36px rgba(18,37,26,0.5);">
+        <div style="display:flex; align-items:center; gap:6px; padding:10px 14px; border-bottom:1px solid #EFF2ED; background:#FBFCFA;">
+          <span style="width:9px; height:9px; border-radius:50%; background:#E3E8E1;"></span><span style="width:9px; height:9px; border-radius:50%; background:#E3E8E1;"></span><span style="width:9px; height:9px; border-radius:50%; background:#E3E8E1;"></span>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#8A968C; margin-left:10px;">app.fiscaura.in / dashboard</span>
+        </div>
+        <div style="display:grid; grid-template-columns:140px 1fr;">
+          <div style="background:#12251A; padding:14px 12px; display:flex; flex-direction:column; gap:2px; font-size:11.5px; color:#8FA396;">
+            <div style="display:flex; align-items:center; gap:6px; padding:6px 8px; color:#FBFCFA; font-weight:600;"><span style="width:5px; height:5px; background:#E9B949; display:inline-block;"></span>Dashboard</div>
+            <div style="padding:6px 8px;">Sales</div>
+            <div style="padding:6px 8px;">Purchases</div>
+            <div style="padding:6px 8px; color:#E9B949;">Banking · 3</div>
+            <div style="padding:6px 8px;">GST</div>
+            <div style="padding:6px 8px;">Reports</div>
+          </div>
+          <div style="padding:18px;">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <div style="border:1px solid #EFF2ED; border-radius:8px; padding:12px;">
+                <div style="font-size:10px; color:#8A968C; letter-spacing:0.08em; font-family:'IBM Plex Mono',monospace;">RECEIVABLES</div>
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:500; margin-top:4px;">₹8,42,610</div>
+              </div>
+              <div style="border:1px solid #EFF2ED; border-radius:8px; padding:12px;">
+                <div style="font-size:10px; color:#8A968C; letter-spacing:0.08em; font-family:'IBM Plex Mono',monospace;">GST PAYABLE · JUL</div>
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:500; margin-top:4px;">₹74,214</div>
+              </div>
+            </div>
+            <div style="border:1px solid #EFF2ED; border-radius:8px; padding:12px; margin-top:10px; background:#FBFCFA;">
+              <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px;"><span style="width:6px; height:6px; background:#E9B949; display:inline-block;"></span><span style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.14em; color:#B08A20; font-weight:600;">ARTH HIGHLIGHTS</span></div>
+              <div style="font-size:12.5px; line-height:1.55; color:#3E4A42;">3 vendor bills arrived by email overnight — parsed, coded, waiting for one-tap approval. Logistics spend is tracking 9% over last month.</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px; margin-top:10px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#5C665E;">
+              <span style="width:6px; height:6px; border-radius:50%; background:#178A43; animation:fisPulse 2.4s infinite;"></span>142 bank transactions categorised today · 0 typed by hand
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="position:absolute; top:-20px; right:-8px; animation:fisFloat 5s ease-in-out infinite;">
+        <div style="background:#FFFFFF; border:1px solid #E0DAC7; border-radius:10px; padding:10px 14px; box-shadow:0 12px 30px -18px rgba(18,37,26,0.4); font-family:'IBM Plex Mono',monospace; font-size:11px; color:#0E5A2F;"><span style="color:#178A43;">✓</span> Bill parsed · ₹1,38,900 · 96% conf.</div>
+      </div>
+      <div style="position:absolute; bottom:-14px; left:-8px; animation:fisFloat2 6s ease-in-out infinite;">
+        <div style="background:#12251A; border:1px solid #234631; color:#FBFCFA; border-radius:10px; padding:10px 14px; box-shadow:0 12px 30px -18px rgba(0,0,0,0.5); font-family:'IBM Plex Mono',monospace; font-size:11px;"><span style="color:#E9B949;">ARTH</span> · e-Way Bill 4712… expires in 36 h</div>
+      </div>
+    </div>
+
+    <!-- Autopilot cards -->
+    <div style="max-width:1140px; margin:0 auto; padding:88px 24px 0; position:relative;">
+      <div style="max-width:640px; margin:0 auto 52px; text-align:center;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; color:#E9B949; margin-bottom:14px;">THE AUTOPILOT</div>
+        <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(28px,3.4vw,40px); line-height:1.1; letter-spacing:-0.025em; margin:0; color:#FFFFFF; text-wrap:pretty;">Paperwork goes in. Books come out. Nobody typed.</h2>
+        <p style="font-size:16px; line-height:1.6; color:#B9C4BA; margin:16px 0 0;">The two slowest jobs in any accounts room run on their own. Every suggestion shows its confidence and waits for your approval — AI drafts, only you post.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:20px;">
+        <div style="background:#FBFCFA; border-radius:14px; padding:24px; color:#12251A;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.12em; color:#0E5A2F; font-weight:600; margin-bottom:8px;">AI BILL PARSING</div>
+          <div style="font-weight:700; font-size:19px; letter-spacing:-0.015em;">Forward the bill. The entry writes itself.</div>
+          <p style="font-size:14px; line-height:1.6; color:#3E4A42; margin:8px 0 18px;">Vendors email your FiscAura AP address — OCR reads vendor, GSTIN and line items, codes them to your accounts, and drafts the bill in ~10 seconds.</p>
+          <div style="border:1px solid #E3E8E1; border-radius:10px; background:#FFFFFF; padding:16px; font-family:'IBM Plex Mono',monospace; font-size:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #EFF2ED; padding-bottom:10px; margin-bottom:6px;">
+              <span style="color:#5C665E; font-size:11px;">xyz-logistics-june.pdf</span>
+              <span style="background:#EFF6F0; border:1px solid #CFE3D4; color:#0E5A2F; border-radius:5px; padding:2px 8px; font-size:10px;">PROCESSED</span>
+            </div>
+            <div style="display:grid; grid-template-columns:88px 1fr 48px; gap:8px; padding:8px 0; border-bottom:1px solid #EFF2ED;"><span style="color:#5C665E;">Vendor</span><span>XYZ Logistics</span><span style="text-align:right; color:#178A43;">98%</span></div>
+            <div style="display:grid; grid-template-columns:88px 1fr 48px; gap:8px; padding:8px 0; border-bottom:1px solid #EFF2ED;"><span style="color:#5C665E;">Amount</span><span>₹1,38,900 · GST 18%</span><span style="text-align:right; color:#178A43;">96%</span></div>
+            <div style="display:grid; grid-template-columns:88px 1fr 48px; gap:8px; padding:8px 0; border-bottom:1px solid #EFF2ED; background:linear-gradient(104deg, rgba(233,185,73,0.35), rgba(233,185,73,0.08));"><span style="color:#5C665E;">Account</span><span style="font-weight:500;">Freight &amp; Cartage</span><span style="text-align:right; color:#B08A20;">91%</span></div>
+            <div style="display:grid; grid-template-columns:88px 1fr 48px; gap:8px; padding:8px 0;"><span style="color:#5C665E;">TDS</span><span>194C @ 2% · − ₹2,778</span><span style="text-align:right; color:#178A43;">auto</span></div>
+            <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:#5C665E; font-size:11px;">Draft bill · journal ready</span>
+              <span style="background:#0E5A2F; color:#FFFFFF; padding:6px 13px; border-radius:6px; font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:12.5px;">Approve</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:#FBFCFA; border-radius:14px; padding:24px; color:#12251A;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.12em; color:#0E5A2F; font-weight:600; margin-bottom:8px;">BANK STATEMENT INGESTION</div>
+          <div style="font-weight:700; font-size:19px; letter-spacing:-0.015em;">The statement lands categorised.</div>
+          <p style="font-size:14px; line-height:1.6; color:#3E4A42; margin:8px 0 18px;">Any bank, any format. Transactions are matched against invoices and bills, coded to the right account — and it learns your corrections.</p>
+          <div style="border:1px solid #E3E8E1; border-radius:10px; background:#FFFFFF; padding:16px; font-family:'IBM Plex Mono',monospace; font-size:11.5px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #EFF2ED; padding-bottom:10px; margin-bottom:6px;">
+              <span style="color:#5C665E; font-size:11px;">hdfc_statement_jul.pdf</span>
+              <span style="color:#5C665E; font-size:10px;">142 rows · 138 auto-matched</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 74px 108px; gap:8px; padding:8px 0; border-bottom:1px solid #EFF2ED;"><span>NEFT-SHARMA TRADERS</span><span style="text-align:right;">+1,18,000</span><span style="text-align:right; color:#0E5A2F;">INV-0587 ✓</span></div>
+            <div style="display:grid; grid-template-columns:1fr 74px 108px; gap:8px; padding:8px 0; border-bottom:1px solid #EFF2ED;"><span>UPI-INDIANOIL-77821</span><span style="text-align:right;">−4,120</span><span style="text-align:right; color:#0E5A2F;">Fuel expense</span></div>
+            <div style="display:grid; grid-template-columns:1fr 74px 108px; gap:8px; padding:8px 0; border-bottom:1px solid #EFF2ED; background:linear-gradient(104deg, rgba(233,185,73,0.35), rgba(233,185,73,0.08));"><span style="font-weight:500;">IMPS-XYZ LOGISTICS</span><span style="text-align:right; font-weight:500;">−1,36,122</span><span style="text-align:right; color:#B08A20;">Bill · 92%</span></div>
+            <div style="display:grid; grid-template-columns:1fr 74px 108px; gap:8px; padding:8px 0; border-bottom:1px solid #EFF2ED;"><span>ACH-GST PMT-2607</span><span style="text-align:right;">−74,214</span><span style="text-align:right; color:#0E5A2F;">GST payable</span></div>
+            <div style="display:grid; grid-template-columns:1fr 74px 108px; gap:8px; padding:8px 0;"><span>POS-AMAZON BUSINESS</span><span style="text-align:right;">−12,890</span><span style="text-align:right; color:#8A968C;">Review · 4 left</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Arth -->
+    <div id="arth" aria-label="Arth" style="max-width:1140px; margin:0 auto; padding:96px 24px 72px; position:relative;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:56px; align-items:center;">
+        <div style="display:flex; align-items:center; justify-content:center; position:relative; min-height:320px;">
+          <div style="position:absolute; width:340px; height:340px; border-radius:50%; background:radial-gradient(circle, rgba(233,185,73,0.10) 0%, rgba(233,185,73,0.03) 55%, transparent 70%);"></div>
+          <svg viewBox="-165 -25 760 410" style="width:min(100%,560px); position:relative;" role="img" aria-label="Arth neural brain — bill parsing, anomaly watch, cash-flow forecast, GST watch, ledger memory, bank categorisation">
+            <path d="M 78,178 C 70,140 82,100 112,78 C 140,56 180,44 215,44 C 260,44 305,60 328,92 C 345,116 352,150 348,178 C 346,196 340,210 330,222 C 340,232 342,248 332,258 C 318,272 290,276 268,264 C 262,276 252,290 238,294 C 230,296 222,294 218,288 C 200,282 175,270 152,252 C 120,228 88,206 78,178 Z" fill="#152E1E" stroke="rgba(143,211,166,0.55)" stroke-width="1.5"></path>
+            <g fill="none" opacity="0.5">
+              <path d="M 132,88 C 152,120 148,160 122,192" stroke="rgba(143,211,166,0.35)" stroke-width="1.2"></path>
+              <path d="M 266,58 C 256,105 268,150 256,208" stroke="rgba(143,211,166,0.3)" stroke-width="1.2"></path>
+              <path d="M 262,222 C 288,216 320,218 338,228" stroke="rgba(143,211,166,0.4)" stroke-width="1.2"></path>
+              <path d="M 274,240 C 292,246 310,248 326,244" stroke="rgba(143,211,166,0.3)" stroke-width="1.1"></path>
+            </g>
+            <g stroke="rgba(143,211,166,0.4)" stroke-width="1" fill="none" stroke-dasharray="3 9" stroke-linecap="round">
+              <line x1="140" y1="90" x2="200" y2="70" style="animation:fisDash 1.6s linear infinite;"></line>
+              <line x1="200" y1="70" x2="260" y2="75" style="animation:fisDash 1.6s linear infinite 0.2s;"></line>
+              <line x1="260" y1="75" x2="310" y2="110" style="animation:fisDash 1.6s linear infinite 0.4s;"></line>
+              <line x1="140" y1="90" x2="110" y2="140" style="animation:fisDash 1.6s linear infinite 0.1s;"></line>
+              <line x1="140" y1="90" x2="170" y2="130" style="animation:fisDash 1.6s linear infinite 0.3s;"></line>
+              <line x1="200" y1="70" x2="170" y2="130" style="animation:fisDash 1.6s linear infinite 0.5s;"></line>
+              <line x1="200" y1="70" x2="235" y2="125" style="animation:fisDash 1.6s linear infinite 0.7s;"></line>
+              <line x1="260" y1="75" x2="235" y2="125" style="animation:fisDash 1.6s linear infinite 0.2s;"></line>
+              <line x1="310" y1="110" x2="295" y2="155" style="animation:fisDash 1.6s linear infinite 0.6s;"></line>
+              <line x1="110" y1="140" x2="170" y2="130" style="animation:fisDash 1.6s linear infinite 0.8s;"></line>
+              <line x1="170" y1="130" x2="235" y2="125" style="animation:fisDash 1.6s linear infinite 1s;"></line>
+              <line x1="235" y1="125" x2="295" y2="155" style="animation:fisDash 1.6s linear infinite 0.4s;"></line>
+              <line x1="295" y1="155" x2="330" y2="190" style="animation:fisDash 1.6s linear infinite 0.9s;"></line>
+              <line x1="110" y1="140" x2="140" y2="185" style="animation:fisDash 1.6s linear infinite 0.5s;"></line>
+              <line x1="170" y1="130" x2="140" y2="185" style="animation:fisDash 1.6s linear infinite 0.7s;"></line>
+              <line x1="170" y1="130" x2="200" y2="175" style="animation:fisDash 1.6s linear infinite 0.1s;"></line>
+              <line x1="235" y1="125" x2="200" y2="175" style="animation:fisDash 1.6s linear infinite 0.9s;"></line>
+              <line x1="235" y1="125" x2="260" y2="195" style="animation:fisDash 1.6s linear infinite 0.3s;"></line>
+              <line x1="295" y1="155" x2="260" y2="195" style="animation:fisDash 1.6s linear infinite 1.1s;"></line>
+              <line x1="330" y1="190" x2="260" y2="195" style="animation:fisDash 1.6s linear infinite 0.6s;"></line>
+              <line x1="140" y1="185" x2="200" y2="175" style="animation:fisDash 1.6s linear infinite 0.8s;"></line>
+              <line x1="200" y1="175" x2="260" y2="195" style="animation:fisDash 1.6s linear infinite 1.2s;"></line>
+              <line x1="140" y1="185" x2="115" y2="215" style="animation:fisDash 1.6s linear infinite 0.4s;"></line>
+              <line x1="140" y1="185" x2="175" y2="230" style="animation:fisDash 1.6s linear infinite 1s;"></line>
+              <line x1="200" y1="175" x2="175" y2="230" style="animation:fisDash 1.6s linear infinite 0.2s;"></line>
+              <line x1="260" y1="195" x2="235" y2="245" style="animation:fisDash 1.6s linear infinite 0.8s;"></line>
+              <line x1="260" y1="195" x2="295" y2="240" style="animation:fisDash 1.6s linear infinite 0.5s;"></line>
+              <line x1="330" y1="190" x2="295" y2="240" style="animation:fisDash 1.6s linear infinite 1.3s;"></line>
+              <line x1="115" y1="215" x2="175" y2="230" style="animation:fisDash 1.6s linear infinite 0.6s;"></line>
+              <line x1="175" y1="230" x2="235" y2="245" style="animation:fisDash 1.6s linear infinite 0.9s;"></line>
+              <line x1="235" y1="245" x2="295" y2="240" style="animation:fisDash 1.6s linear infinite 0.3s;"></line>
+              <line x1="235" y1="245" x2="230" y2="285" style="animation:fisDash 1.6s linear infinite 1.1s;"></line>
+              <line x1="295" y1="240" x2="230" y2="285" style="animation:fisDash 1.6s linear infinite 0.7s;"></line>
+            </g>
+            <g>
+              <circle cx="140" cy="90" r="3" fill="#8FD3A6"></circle><circle cx="140" cy="90" r="7" fill="none" stroke="#8FD3A6" style="animation:fisGlow 3s ease-in-out infinite;"></circle>
+              <circle cx="200" cy="70" r="3.5" fill="#E9B949"></circle><circle cx="200" cy="70" r="8" fill="none" stroke="#E9B949" style="animation:fisGlow 3s ease-in-out infinite 0.4s;"></circle>
+              <circle cx="260" cy="75" r="3" fill="#8FD3A6"></circle><circle cx="260" cy="75" r="7" fill="none" stroke="#8FD3A6" style="animation:fisGlow 3s ease-in-out infinite 0.8s;"></circle>
+              <circle cx="310" cy="110" r="3.5" fill="#E9B949"></circle><circle cx="310" cy="110" r="8" fill="none" stroke="#E9B949" style="animation:fisGlow 3s ease-in-out infinite 1.2s;"></circle>
+              <circle cx="110" cy="140" r="3.5" fill="#E9B949"></circle><circle cx="110" cy="140" r="8" fill="none" stroke="#E9B949" style="animation:fisGlow 3s ease-in-out infinite 1.6s;"></circle>
+              <circle cx="170" cy="130" r="3" fill="#8FD3A6"></circle><circle cx="170" cy="130" r="7" fill="none" stroke="#8FD3A6" style="animation:fisGlow 3s ease-in-out infinite 2s;"></circle>
+              <circle cx="235" cy="125" r="3" fill="#8FD3A6"></circle><circle cx="235" cy="125" r="7" fill="none" stroke="#8FD3A6" style="animation:fisGlow 3s ease-in-out infinite 2.4s;"></circle>
+              <circle cx="295" cy="155" r="3" fill="#8FD3A6"></circle><circle cx="295" cy="155" r="7" fill="none" stroke="#8FD3A6" style="animation:fisGlow 3s ease-in-out infinite 0.2s;"></circle>
+              <circle cx="330" cy="190" r="3.5" fill="#E9B949"></circle><circle cx="330" cy="190" r="8" fill="none" stroke="#E9B949" style="animation:fisGlow 3s ease-in-out infinite 0.6s;"></circle>
+              <circle cx="140" cy="185" r="3" fill="#8FD3A6"></circle><circle cx="140" cy="185" r="7" fill="none" stroke="#8FD3A6" style="animation:fisGlow 3s ease-in-out infinite 1s;"></circle>
+              <circle cx="200" cy="175" r="3" fill="#8FD3A6"></circle><circle cx="200" cy="175" r="7" fill="none" stroke="#8FD3A6" style="animation:fisGlow 3s ease-in-out infinite 1.4s;"></circle>
+              <circle cx="260" cy="195" r="3" fill="#8FD3A6"></circle><circle cx="260" cy="195" r="7" fill="none" stroke="#8FD3A6" style="animation:fisGlow 3s ease-in-out infinite 1.8s;"></circle>
+              <circle cx="115" cy="215" r="3.5" fill="#E9B949"></circle><circle cx="115" cy="215" r="8" fill="none" stroke="#E9B949" style="animation:fisGlow 3s ease-in-out infinite 2.2s;"></circle>
+              <circle cx="175" cy="230" r="3" fill="#8FD3A6"></circle><circle cx="175" cy="230" r="7" fill="none" stroke="#8FD3A6" style="animation:fisGlow 3s ease-in-out infinite 2.6s;"></circle>
+              <circle cx="235" cy="245" r="3" fill="#8FD3A6"></circle><circle cx="235" cy="245" r="7" fill="none" stroke="#8FD3A6" style="animation:fisGlow 3s ease-in-out infinite 0.3s;"></circle>
+              <circle cx="295" cy="240" r="3.5" fill="#E9B949"></circle><circle cx="295" cy="240" r="8" fill="none" stroke="#E9B949" style="animation:fisGlow 3s ease-in-out infinite 0.9s;"></circle>
+              <circle cx="230" cy="285" r="3" fill="#8FD3A6"></circle><circle cx="230" cy="285" r="7" fill="none" stroke="#8FD3A6" style="animation:fisGlow 3s ease-in-out infinite 1.5s;"></circle>
+            </g>
+            <g font-family="IBM Plex Mono, monospace" font-size="11" stroke-width="0.75">
+              <polyline points="200,70 178,26 118,26" fill="none" stroke="#E9B949" opacity="0.6"></polyline>
+              <text x="112" y="30" fill="#E9B949" text-anchor="end">bill parsing</text>
+              <polyline points="310,110 348,52 372,52" fill="none" stroke="#E9B949" opacity="0.6"></polyline>
+              <text x="378" y="56" fill="#E9B949">anomaly watch</text>
+              <polyline points="330,190 384,178 398,178" fill="none" stroke="#E9B949" opacity="0.6"></polyline>
+              <text x="404" y="182" fill="#E9B949">cash-flow forecast</text>
+              <polyline points="295,240 342,308 360,308" fill="none" stroke="#E9B949" opacity="0.6"></polyline>
+              <text x="366" y="312" fill="#E9B949">e-way &amp; gst watch</text>
+              <polyline points="115,215 62,300 44,300" fill="none" stroke="#E9B949" opacity="0.6"></polyline>
+              <text x="38" y="304" fill="#E9B949" text-anchor="end">ledger memory</text>
+              <polyline points="110,140 52,108 34,108" fill="none" stroke="#E9B949" opacity="0.6"></polyline>
+              <text x="28" y="112" fill="#E9B949" text-anchor="end">bank categorisation</text>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;"><span style="width:7px; height:7px; background:#E9B949; display:inline-block;"></span><span style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; color:#E9B949;">ARTH — THE INTELLIGENCE</span></div>
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(26px,3.2vw,36px); line-height:1.1; letter-spacing:-0.025em; margin:0; color:#FFFFFF; text-wrap:pretty;">Software records. Arth <span style="font-style:italic; color:#E9B949;">notices</span>.</h2>
+          <p style="font-size:15.5px; line-height:1.65; color:#B9C4BA; margin:16px 0 22px; max-width:460px;">Arth reads every entry the autopilot posts and surfaces what a sharp CA would — unprompted, in plain language, with the journal rows to prove it.</p>
+          <div style="display:flex; flex-direction:column; gap:10px; max-width:460px;">
+            <div style="background:#16301F; border:1px solid #234631; border-radius:10px; padding:13px 16px; font-size:13.5px; line-height:1.55; color:#E8EDE6;">
+              <span style="color:#E9B949; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em;">ANOMALY</span><br>This bill from XYZ Logistics is 23% above their 6-month average for the same route.
+            </div>
+            <div style="background:#16301F; border:1px solid #234631; border-radius:10px; padding:13px 16px; font-size:13.5px; line-height:1.55; color:#E8EDE6;">
+              <span style="color:#E9B949; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em;">CASH FLOW</span><br>At this collection pace you'll be ₹3.2 lakh short for the Aug 20 GST payment. Three reminder drafts are ready.
+            </div>
+            <div style="background:#16301F; border:1px solid #234631; border-radius:10px; padding:13px 16px; font-size:13.5px; line-height:1.55; color:#E8EDE6;">
+              <span style="color:#E9B949; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em;">MONTH CLOSE</span><br>June closed in 2 days, not 9. One unmatched credit of ₹18,400 needs your eye.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(233,237,230,0.12); margin-top:64px; padding-top:24px; display:flex; flex-wrap:wrap; gap:10px 28px; align-items:baseline; font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8FA396;">
+        <span style="color:#E9B949; letter-spacing:0.14em; font-size:10.5px;">LEARNING NEXT</span>
+        <span>live bank feeds</span><span>AI cash-flow forecasting</span><span>mobile app</span><span>workflow builder</span><span style="color:#5C7263;">— Starter customers get each one the day it lands</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- JOURNEY -->
+<section id="journey" aria-label="Journey" style="background:#FBFCFA; border-bottom:1px solid #E3E8E1;">
+  <div style="max-width:1140px; margin:0 auto; padding:88px 24px;">
+    <div style="max-width:660px; margin-bottom:44px;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; color:#5C665E; margin-bottom:14px;">THE JOURNEY</div>
+      <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(28px,3.4vw,40px); line-height:1.1; letter-spacing:-0.01em; margin:0; text-wrap:pretty;">The road to autonomous finance.</h2>
+      <p style="font-size:15.5px; line-height:1.6; color:#3E4A42; margin:14px 0 0;">Not more manual software — intelligent systems that understand financial operations, automate the routine, and eventually execute with appropriate human oversight.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;">
+      <div style="background:#12251A; color:#FBFCFA; border-radius:12px; padding:22px;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;"><span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#E9B949;">PHASE 01</span><span style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:0.12em; color:#E9B949; border:1px solid rgba(233,185,73,0.4); border-radius:999px; padding:3px 8px;">WE ARE HERE</span></div>
+        <div style="font-weight:700; font-size:16.5px; margin-top:12px;">AI-native accounting</div>
+        <div style="font-size:13.5px; line-height:1.55; color:#B9C4BA; margin-top:6px;">Digitising and automating core accounting operations.</div>
+      </div>
+      <div style="border:1px solid #E3E8E1; border-radius:12px; padding:22px; background:#FFFFFF;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#B08A20;">PHASE 02</span>
+        <div style="font-weight:700; font-size:16.5px; margin-top:12px;">Finance intelligence</div>
+        <div style="font-size:13.5px; line-height:1.55; color:#3E4A42; margin-top:6px;">Transforming financial data into actionable business insight.</div>
+      </div>
+      <div style="border:1px solid #E3E8E1; border-radius:12px; padding:22px; background:#FFFFFF;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#B08A20;">PHASE 03</span>
+        <div style="font-weight:700; font-size:16.5px; margin-top:12px;">AI agents</div>
+        <div style="font-size:13.5px; line-height:1.55; color:#3E4A42; margin-top:6px;">Specialised assistants managing individual finance workflows.</div>
+      </div>
+      <div style="border:1px solid #E3E8E1; border-radius:12px; padding:22px; background:#FFFFFF;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#B08A20;">PHASE 04</span>
+        <div style="font-weight:700; font-size:16.5px; margin-top:12px;">Autonomous finance</div>
+        <div style="font-size:13.5px; line-height:1.55; color:#3E4A42; margin-top:6px;">Finance operates continuously and proactively under human governance.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MCP -->
+<section id="mcp" aria-label="Claude and ChatGPT" style="background:#F6F3EA; border-bottom:1px solid #E7E2D3;">
+  <div style="max-width:1140px; margin:0 auto; padding:96px 24px; display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:56px; align-items:center;">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; color:#5C665E; margin-bottom:14px;">WORKS WHERE YOU ALREADY WORK</div>
+      <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(28px,3.4vw,40px); line-height:1.1; letter-spacing:-0.025em; margin:0; text-wrap:pretty;">Talk to your books from Claude or ChatGPT.</h2>
+      <p style="font-size:16px; line-height:1.65; color:#3E4A42; margin:18px 0 0; max-width:460px;">Connect FiscAura to any AI assistant that speaks MCP. Ask for a receivables summary mid-conversation, or have an invoice drafted without opening the app. An assistant can draft — only you post.</p>
+      <div style="display:flex; gap:10px; margin-top:24px; flex-wrap:wrap;">
+        <span style="background:#FFFFFF; border:1px solid #DCD5C0; border-radius:999px; padding:7px 16px; font-weight:600; font-size:13.5px;">Claude</span>
+        <span style="background:#FFFFFF; border:1px solid #DCD5C0; border-radius:999px; padding:7px 16px; font-weight:600; font-size:13.5px;">ChatGPT</span>
+        <span style="background:#FFFFFF; border:1px solid #DCD5C0; border-radius:999px; padding:7px 16px; font-weight:600; font-size:13.5px; color:#5C665E;">Any MCP client</span>
+      </div>
+    </div>
+    <div style="max-width:500px; display:flex; flex-direction:column; gap:12px;">
+      <div style="align-self:flex-end; max-width:88%; background:#FFFFFF; border:1px solid #E0DAC7; border-radius:12px 12px 4px 12px; padding:12px 16px; font-size:14.5px; line-height:1.5;">Draft an invoice for Sharma Traders — 40 LED panels at ₹1,600 each, usual terms.</div>
+      <div style="align-self:flex-start; max-width:94%; background:#12251A; color:#FBFCFA; border-radius:12px 12px 12px 4px; padding:16px 20px; font-size:14.5px; line-height:1.6;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-family:'IBM Plex Mono',monospace; font-size:10.5px;">
+          <span style="background:#1E3A29; border:1px solid #2E5A3D; border-radius:5px; padding:3px 8px; color:#8FD3A6;">fiscaura · create-invoice-draft ✓</span>
+        </div>
+        Draft INV-2026-0612 is ready in FiscAura — ₹75,520 incl. GST 18%, due 30 days. Nothing is sent until you approve it there.
+      </div>
+      <div style="align-self:flex-end; max-width:88%; background:#FFFFFF; border:1px solid #E0DAC7; border-radius:12px 12px 4px 12px; padding:12px 16px; font-size:14.5px; line-height:1.5;">Who still owes us money this month?</div>
+      <div style="align-self:flex-start; max-width:94%; background:#12251A; color:#FBFCFA; border-radius:12px 12px 12px 4px; padding:16px 20px; font-size:14.5px; line-height:1.6;">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px; font-family:'IBM Plex Mono',monospace; font-size:10.5px;">
+          <span style="background:#1E3A29; border:1px solid #2E5A3D; border-radius:5px; padding:3px 8px; color:#8FD3A6;">fiscaura · query-receivables ✓</span>
+        </div>
+        Seven invoices open, ₹8.4 lakh total. Three are past 45 days — the largest is ₹1.1 lakh from Mehta &amp; Sons, due 28 June.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM -->
+<section id="platform" aria-label="Platform" style="background:#FBFCFA; border-bottom:1px solid #E3E8E1;">
+  <div style="max-width:1140px; margin:0 auto; padding:80px 24px;">
+    <div style="max-width:640px; margin-bottom:44px;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; color:#5C665E; margin-bottom:14px;">UNDER THE AUTOPILOT</div>
+      <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(26px,3vw,34px); line-height:1.12; letter-spacing:-0.02em; margin:0; text-wrap:pretty;">A complete accounting platform, compliance built in.</h2>
+      <p style="font-size:15.5px; line-height:1.6; color:#3E4A42; margin:14px 0 0;">Autonomy is only useful on top of correct books. Everything below is in every plan — no compliance paywall.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:0; border-top:1px solid #E3E8E1;">
+      <div style="padding:24px 24px 24px 0; border-bottom:1px solid #E3E8E1;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#0E5A2F; margin-bottom:8px;">QUOTE → CASH</div>
+        <div style="font-size:14.5px; line-height:1.7; color:#3E4A42;">Quotations · invoices with instant IRN · delivery challans with e-Way Bills · payment tracking</div>
+      </div>
+      <div style="padding:24px 24px 24px 0; border-bottom:1px solid #E3E8E1;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#0E5A2F; margin-bottom:8px;">BILL → BOOKS</div>
+        <div style="font-size:14.5px; line-height:1.7; color:#3E4A42;">Vendor bills · TDS deducted section-wise · inventory &amp; GRN · journals that post themselves</div>
+      </div>
+      <div style="padding:24px 0; border-bottom:1px solid #E3E8E1;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#0E5A2F; margin-bottom:8px;">FILING-READY</div>
+        <div style="font-size:14.5px; line-height:1.7; color:#3E4A42;">GSTR-1 &amp; 3B from your invoices · ITC matching against 2B · mismatches flagged before you file</div>
+      </div>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:24px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:#5C665E;">
+      <span>Imports from Tally — trial balance matched</span><span>·</span><span>Data resides in India</span><span>·</span><span>AI drafts, never posts</span><span>·</span><span>Not SOC 2 yet — <a href="#platform">honestly stated</a></span>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" aria-label="Pricing" style="background:#FBFCFA; border-bottom:1px solid #E3E8E1;">
+  <div style="max-width:1140px; margin:0 auto; padding:88px 24px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:56px; align-items:start;">
+    <div>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; color:#5C665E; margin-bottom:14px;">PRICING</div>
+      <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(28px,3.2vw,38px); line-height:1.12; letter-spacing:-0.02em; margin:0; text-wrap:pretty;">One plan. Everything in it.</h2>
+      <p style="font-size:16px; line-height:1.6; color:#3E4A42; margin:16px 0 0; max-width:440px;">No feature gates on compliance or AI — bill parsing, bank ingestion, Arth, and MCP access are all in Starter. Growth and Pro tiers arrive soon; Starter customers hear first.</p>
+      <div style="display:flex; align-items:center; gap:12px; margin-top:26px; font-weight:500; font-size:14px;">
+        <span id="lbl-monthly" style="color:#12251A;">Monthly</span>
+        <button id="billing-toggle" type="button" aria-label="Toggle annual billing" aria-pressed="false" style="width:42px; height:24px; border-radius:12px; background:#0E5A2F; position:relative; cursor:pointer; display:inline-block; border:none; padding:0;">
+          <span id="billing-knob" style="position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#FFFFFF; transition:left 0.15s;"></span>
+        </button>
+        <span id="lbl-annual" style="color:#5C665E;">Annual <span style="color:#B08A20;">— 2 months free</span></span>
+      </div>
+      <div style="display:flex; gap:10px; margin-top:28px; flex-wrap:wrap;">
+        <span style="border:1px dashed #C9D1C8; border-radius:8px; padding:10px 16px; font-size:13.5px; color:#5C665E;">Growth — coming soon</span>
+        <span style="border:1px dashed #C9D1C8; border-radius:8px; padding:10px 16px; font-size:13.5px; color:#5C665E;">Pro — coming soon</span>
+      </div>
+    </div>
+    <div style="max-width:460px; border:1px solid #E3E8E1; border-radius:12px; background:#FFFFFF; overflow:hidden;">
+      <div style="padding:28px 28px 24px; border-bottom:1px solid #E3E8E1;">
+        <div style="font-weight:600; font-size:15px; color:#5C665E;">Starter</div>
+        <div style="margin-top:8px; display:flex; align-items:baseline; gap:8px;">
+          <span id="price-amount" style="font-weight:700; font-size:42px; letter-spacing:-0.03em; font-family:'IBM Plex Mono',monospace;">₹1,800</span>
+          <span id="price-unit" style="color:#5C665E; font-size:14px;">/month · GST extra</span>
+        </div>
+      </div>
+      <div style="padding:8px 28px; font-size:14.5px; color:#3E4A42;">
+        <div style="padding:12px 0; border-bottom:1px solid #EFF2ED;">Full double-entry accounting · 3 users</div>
+        <div style="padding:12px 0; border-bottom:1px solid #EFF2ED;">GST returns, e-Invoicing, e-Way Bills, TDS</div>
+        <div style="padding:12px 0; border-bottom:1px solid #EFF2ED;">AI bill parsing &amp; bank statement ingestion</div>
+        <div style="padding:12px 0;">Arth + Claude/ChatGPT access — not metered</div>
+      </div>
+      <div style="padding:0 28px 24px;">
+        <a class="btn-dark" href="https://app.fiscaura.in/app" style="display:block; text-align:center; background:#0E5A2F; color:#FFFFFF; font-weight:600; font-size:15px; padding:13px 0; border-radius:8px;">Start 14-day free trial</a>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:#5C665E; text-align:center; margin-top:10px;">UPI, cards, net banking · 30-day money-back</div>
+      </div>
+      <div style="background:#12251A; color:#FBFCFA; padding:14px 28px; font-size:13.5px; line-height:1.55;">
+        <div style="display:flex; align-items:center; gap:7px; margin-bottom:4px;"><span style="width:6px; height:6px; background:#E9B949; display:inline-block;"></span><span style="color:#E9B949; font-weight:600; font-size:10px; letter-spacing:0.14em; font-family:'IBM Plex Mono',monospace;">ARTH</span></div>
+        At ₹18,000/year you'd spend less than one month of a part-time accountant's time.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" aria-label="Get started" style="background:#FBFCFA;">
+  <div style="max-width:1140px; margin:0 auto; padding:104px 24px; display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:48px; align-items:center;">
+    <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(28px,3.4vw,40px); letter-spacing:-0.025em; line-height:1.1; margin:0; text-wrap:pretty;">Stop typing your books.<br>Start <span style="font-style:italic; color:#0E5A2F;">reading</span> them.</h2>
+    <div style="justify-self:start;">
+      <a class="btn-dark" href="https://app.fiscaura.in/app" style="display:inline-block; background:#0E5A2F; color:#FFFFFF; font-weight:600; font-size:16px; padding:14px 32px; border-radius:8px;">Start free — 14 days</a>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#5C665E; margin-top:12px;">Import from Tally in an afternoon · Cancel with two clicks</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#12251A; color:#B9C4BA;">
+  <div style="max-width:1140px; margin:0 auto; padding:56px 24px 40px;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:40px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:9px;">
+          <img src="assets/fiscaura-logo.png" alt="" width="26" height="26" style="object-fit:contain;">
+          <span style="font-weight:700; font-size:16px; color:#FFFFFF;">FiscAura</span>
+        </div>
+        <div style="font-size:13.5px; line-height:1.6; margin-top:12px; color:#8A968C;">The intelligent finance platform for Indian businesses — working towards fully autonomous accounting.</div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px; font-size:14px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.16em; color:#5C665E;">PRODUCT</span>
+        <a href="#autopilot" style="color:#B9C4BA;">Autopilot</a><a href="#arth" style="color:#B9C4BA;">Arth</a><a href="#mcp" style="color:#B9C4BA;">Claude &amp; ChatGPT</a><a href="#pricing" style="color:#B9C4BA;">Pricing</a>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px; font-size:14px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.16em; color:#5C665E;">COMPANY</span>
+        <a href="about.html" style="color:#B9C4BA;">About</a><a href="contact.html" style="color:#B9C4BA;">Contact</a>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px; font-size:14px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.16em; color:#5C665E;">LEGAL</span>
+        <a href="privacy.html" style="color:#B9C4BA;">Privacy</a><a href="terms.html" style="color:#B9C4BA;">Terms</a>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(233,237,230,0.12); margin-top:40px; padding-top:20px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#5C665E;">© FY 2026-27 FiscAura · Made in India</div>
+  </div>
+</footer>
+
+<script>
+// The two interactive widgets from the design. Content is already server-rendered
+// above (crawlers see the monthly price + first ticker line); this only animates.
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 1) Hero status ticker — cycles messages with a fade.
+  var TICKS = [
+    'autopilot: parsed xyz-logistics-june.pdf → bill drafted · 96% confidence',
+    'autopilot: 142 bank transactions categorised · 4 left for review',
+    'autopilot: GSTR-1 for July assembled · 0 mismatches',
+    'arth: e-Way Bill 4712… expires in 36 h — flagged before the truck is stopped'
+  ];
+  var tickEl = document.getElementById('hero-tick');
+  if (tickEl && !reduce) {
+    var i = 0;
+    setInterval(function () {
+      tickEl.style.opacity = '0';
+      setTimeout(function () {
+        i = (i + 1) % TICKS.length;
+        tickEl.textContent = TICKS[i];
+        tickEl.style.opacity = '1';
+      }, 320);
+    }, 3600);
+  }
+
+  // 2) Pricing monthly/annual toggle.
+  var btn = document.getElementById('billing-toggle');
+  if (btn) {
+    var annual = false;
+    btn.addEventListener('click', function () {
+      annual = !annual;
+      document.getElementById('billing-knob').style.left = annual ? '21px' : '3px';
+      document.getElementById('price-amount').textContent = annual ? '₹18,000' : '₹1,800';
+      document.getElementById('price-unit').textContent = annual ? '/year · GST extra' : '/month · GST extra';
+      document.getElementById('lbl-monthly').style.color = annual ? '#5C665E' : '#12251A';
+      document.getElementById('lbl-annual').style.color = annual ? '#12251A' : '#5C665E';
+      btn.setAttribute('aria-pressed', String(annual));
+    });
+  }
+})();
+</script>
+</body>
+</html>
