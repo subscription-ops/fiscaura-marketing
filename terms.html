@@ -31,6 +31,25 @@
   .prose p, .prose li { font-size:15.5px; line-height:1.7; color:#3E4A42; }
   .prose ul { padding-left:20px; margin:8px 0; }
   .prose li { margin:6px 0; }
+  /* Mobile nav. <details> supplies the open/close state, keyboard handling and
+     screen-reader semantics natively, so no JS is needed to open or close it. */
+  .mnav { display:none; }
+  .mnav > summary { list-style:none; cursor:pointer; padding:10px; margin:-10px; color:#12251A; display:flex; }
+  .mnav > summary::-webkit-details-marker { display:none; }
+  .mnav > summary:focus-visible { outline:2px solid #0E5A2F; outline-offset:2px; border-radius:6px; }
+  .mnav .ico-x { display:none; }
+  .mnav[open] .ico-bars { display:none; }
+  .mnav[open] .ico-x { display:block; }
+  .mnav-panel { position:absolute; top:100%; left:0; right:0; display:flex; flex-direction:column;
+    background:#F6F3EA; border-bottom:1px solid #E7E2D3; padding:6px 24px 18px;
+    max-height:calc(100vh - 64px); overflow-y:auto;
+    box-shadow:0 18px 30px -24px rgba(18,37,26,0.35); }
+  .mnav-panel a { padding:14px 2px; font-size:16px; font-weight:500; color:#3E4A42; border-bottom:1px solid #E7E2D3; }
+  .mnav-panel a:last-child { border-bottom:0; }
+  @media (max-width:900px) {
+    .desknav { display:none !important; }
+    .mnav { display:block; }
+  }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
 </style>
 </head>
@@ -43,7 +62,7 @@
       <img src="assets/fiscaura-logo.png" alt="FiscAura" width="28" height="28" style="object-fit:contain;">
       <span style="font-weight:700; font-size:17px; letter-spacing:-0.01em; color:#12251A;">FiscAura</span>
     </a>
-    <nav style="display:flex; align-items:center; gap:26px; font-weight:500; font-size:14px;">
+    <nav class="desknav" style="display:flex; align-items:center; gap:26px; font-weight:500; font-size:14px;">
       <a class="navlink" href="index.html#autopilot" style="color:#3E4A42;">Autopilot</a>
       <a class="navlink" href="index.html#arth" style="color:#3E4A42;">Arth</a>
       <a class="navlink" href="index.html#mcp" style="color:#3E4A42;">Claude &amp; ChatGPT</a>
@@ -53,6 +72,22 @@
       <a class="navlink" href="contact.html" style="color:#3E4A42;">Contact</a>
       <a class="btn-dark" href="https://app.fiscaura.in/app" style="background:#0E5A2F; color:#FFFFFF; font-weight:600; padding:8px 16px; border-radius:8px;">Start free</a>
     </nav>
+    <details class="mnav">
+      <summary aria-label="Menu">
+        <svg class="ico-bars" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <svg class="ico-x" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </summary>
+      <div class="mnav-panel">
+        <a href="index.html#autopilot">Autopilot</a>
+        <a href="index.html#arth">Arth</a>
+        <a href="index.html#mcp">Claude &amp; ChatGPT</a>
+        <a href="index.html#platform">Platform</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a class="btn-dark" href="https://app.fiscaura.in/app" style="background:#0E5A2F; color:#FFFFFF; font-weight:600; padding:14px 16px; border-radius:8px; text-align:center; margin-top:14px;">Start free — 14 days</a>
+      </div>
+    </details>
   </div>
 </header>
 
@@ -122,7 +157,7 @@
 <!-- FOOTER -->
 <footer style="background:#12251A; color:#B9C4BA;">
   <div style="max-width:1140px; margin:0 auto; padding:56px 24px 40px;">
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:40px;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr)); gap:40px;">
       <div>
         <div style="display:flex; align-items:center; gap:9px;">
           <img src="assets/fiscaura-logo.png" alt="" width="26" height="26" style="object-fit:contain;">
