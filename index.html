@@ -32,20 +32,9 @@
   .btn-dark:hover { background:#12251A !important; color:#FFFFFF !important; }
   .btn-outline:hover { border-color:#12251A !important; color:#12251A !important; }
   @keyframes fisPulse { 0%,100% { opacity:0.35; } 50% { opacity:1; } }
-  @keyframes fisFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-7px); } }
-  @keyframes fisFloat2 { 0%,100% { transform:translateY(0); } 50% { transform:translateY(6px); } }
   @keyframes fisRipple { from { transform:scale(1); } to { transform:scale(1.06); } }
   @keyframes fisDash { to { stroke-dashoffset:-24; } }
   @keyframes fisGlow { 0%,100% { opacity:0.2; } 50% { opacity:0.9; } }
-  /* Laptop screenshot deck — scroll position picks the visible shot, the rest fade out. */
-  .shot { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top center; opacity:0; transition:opacity 0.55s ease; }
-  .shot.on { opacity:1; }
-  .shot-tab { flex:1; max-width:180px; background:none; cursor:pointer; padding:9px 4px 0; border:0; border-top:2px solid rgba(233,237,230,0.14); font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.12em; color:#5C7263; transition:color 0.3s, border-color 0.3s; }
-  .shot-tab:hover { color:#B9C4BA; }
-  .shot-tab.on { color:#E9B949; border-top-color:#E9B949; }
-  /* Badges hang past the laptop's padding box, so on phones they'd force a sideways
-     scroll onto a screenshot that is too small to sit behind them anyway. */
-  @media (max-width: 640px) { .lap-badge { display:none; } }
   /* Mobile nav. <details> supplies the open/close state, keyboard handling and
      screen-reader semantics natively, so no JS is needed to open or close it. */
   .mnav { display:none; }
@@ -69,6 +58,28 @@
      table scroll inside its own card rather than widening the whole page. */
   .minitable { overflow-x:auto; }
   .minitable > div { min-width:264px; }
+  /* Hero film, playing behind the copy. */
+  .film-sound { position:absolute; left:14px; bottom:14px; display:inline-flex; align-items:center; gap:8px;
+    min-height:40px; padding:0 14px; border-radius:999px; border:1px solid rgba(255,255,255,0.22);
+    background:rgba(15,36,24,0.55); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+    color:#FBFCFA; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.12em; cursor:pointer;
+    transition:background 0.2s; }
+  .film-sound:hover { background:rgba(15,36,24,0.8); }
+  .film-sound:focus-visible { outline:2px solid #E9B949; outline-offset:2px; }
+  .film-sound .ico-on { display:none; }
+  .film-sound[aria-pressed="true"] .ico-on { display:block; }
+  .film-sound[aria-pressed="true"] .ico-off { display:none; }
+  .hero-bg { position:absolute; top:64px; right:0; bottom:0; left:0; overflow:hidden; pointer-events:none; }
+  .hero-bg .film { display:block; position:absolute; top:0; right:0; width:auto; height:100%; max-width:none;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 35%); mask-image:linear-gradient(90deg,transparent,#000 35%); }
+  .hero-bg::after { content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg,#F6F3EA 0%,rgba(246,243,234,0.94) 34%,rgba(246,243,234,0.55) 56%,rgba(246,243,234,0) 78%),
+               linear-gradient(0deg,rgba(246,243,234,0.6),rgba(246,243,234,0) 30%); }
+  .hero-bg .film-sound { left:auto; right:24px; bottom:28px; z-index:2; pointer-events:auto; }
+  @media (max-width:900px) {
+    .hero-bg::after { background:rgba(246,243,234,0.86); }
+    .hero-bg .film-sound { right:16px; bottom:20px; }
+  }
   @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
 </style>
 
@@ -145,9 +156,18 @@
 
 <!-- HERO -->
 <section aria-label="Hero" style="padding-top:64px; background:#F6F3EA; position:relative; overflow:hidden;">
-  <div style="position:absolute; left:50%; top:420px; transform:translateX(-50%); width:900px; height:900px; border-radius:50%; border:1px solid rgba(14,90,47,0.08); pointer-events:none;"></div>
-  <div style="position:absolute; left:50%; top:520px; transform:translateX(-50%); width:1300px; height:1300px; border-radius:50%; border:1px solid rgba(14,90,47,0.06); pointer-events:none;"></div>
-  <div style="max-width:1240px; margin:0 auto; padding:72px 24px 88px; display:flex; flex-wrap:wrap; align-items:center; gap:40px 48px; position:relative;">
+  <div class="hero-bg">
+    <video class="film" loop playsinline preload="metadata" poster="assets/fiscaura-film-poster.jpg"
+               aria-label="FiscAura film: a warehouse owner's stock, GST filings and bills reconcile themselves as goods move from dock to truck.">
+          <source src="assets/fiscaura-film.mp4" type="video/mp4">
+        </video>
+    <button class="film-sound" type="button" aria-pressed="true" aria-label="Film sound">
+          <svg class="ico-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/></svg>
+          <svg class="ico-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+          <span>SOUND</span>
+        </button>
+  </div>
+  <div style="max-width:1240px; margin:0 auto; padding:72px 24px 88px; min-height:min(640px,78vh); box-sizing:border-box; display:flex; flex-wrap:wrap; align-items:center; gap:40px 48px; position:relative;">
     <!-- copy -->
     <div style="flex:1 1 380px; min-width:0;">
       <div style="display:inline-flex; align-items:center; gap:8px; border:1px solid #DCD5C0; border-radius:999px; padding:6px 14px; background:#FFFFFF; margin-bottom:24px;">
@@ -172,41 +192,6 @@
       </div>
     </div>
 
-    <!-- laptop: real app screenshots, advanced by scroll -->
-    <div id="laptop" style="flex:1 1 500px; min-width:0; position:relative;">
-      <!-- lid -->
-      <div style="position:relative; background:linear-gradient(180deg,#243C2C,#16301F); border:1px solid #2E4C39; border-radius:14px 14px 5px 5px; padding:11px 11px 13px; box-shadow:0 40px 88px -40px rgba(18,37,26,0.6);">
-        <span style="position:absolute; top:4px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:#3C5A48;"></span>
-        <div style="border-radius:6px; overflow:hidden; background:#FFFFFF;">
-          <div style="display:flex; align-items:center; gap:6px; padding:8px 12px; border-bottom:1px solid #EFF2ED; background:#FBFCFA;">
-            <span style="width:8px; height:8px; border-radius:50%; background:#E3E8E1;"></span><span style="width:8px; height:8px; border-radius:50%; background:#E3E8E1;"></span><span style="width:8px; height:8px; border-radius:50%; background:#E3E8E1;"></span>
-            <span id="shot-url" style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#8A968C; margin-left:8px;">app.fiscaura.in / dashboard</span>
-          </div>
-          <div style="position:relative; aspect-ratio:1914/876; background:#FBFCFA;">
-            <img class="shot on" src="assets/fiscaura-dashboard.jpg" width="1914" height="876" data-url="app.fiscaura.in / dashboard" decoding="async" alt="FiscAura dashboard: financial health ratios — current ratio 2.60, profit margin 70.2%, ROA 62.6% — beside GSTR-1 and GSTR-3B filing deadlines and an Arth recommendation to plan ₹1.67L of upcoming bills.">
-            <img class="shot" src="assets/fiscaura-ar-aging-report.jpg" width="1914" height="876" data-url="app.fiscaura.in / reports / ar-aging" loading="lazy" decoding="async" alt="FiscAura AR Aging Report: receivables bucketed as current, 1–30, 31–60, 61–90 and 90+ days, totalling ₹5,55,016.50 outstanding, with a per-customer breakdown.">
-            <img class="shot" src="assets/fiscaura-arth-ai.jpg" width="1914" height="876" data-url="app.fiscaura.in / arth" loading="lazy" decoding="async" alt="Arth, FiscAura's conversational CFO, answering “Generate monthly P&amp;L for this quarter” with July 2026 sales of ₹4,69,180 across 32 invoices, expenses of ₹52,430 and net profit of ₹4,16,750.">
-          </div>
-        </div>
-      </div>
-      <!-- hinge + deck -->
-      <div style="height:8px; margin:0 22px; background:linear-gradient(180deg,#1B3524,#12251A); border-radius:0 0 5px 5px;"></div>
-      <div style="position:relative; height:10px; width:calc(100% + 36px); margin-left:-18px; background:linear-gradient(180deg,#20382A,#0C1B12); border-radius:0 0 12px 12px; clip-path:polygon(0 0,100% 0,98.5% 100%,1.5% 100%);">
-        <span style="position:absolute; top:0; left:50%; transform:translateX(-50%); width:84px; height:4px; background:#0A160E; border-radius:0 0 5px 5px;"></span>
-      </div>
-      <!-- which shot is showing; also a manual control -->
-      <div style="display:flex; justify-content:center; gap:10px; margin-top:22px;">
-        <button class="shot-tab on" type="button" data-shot="0">DASHBOARD</button>
-        <button class="shot-tab" type="button" data-shot="1">AR AGING</button>
-        <button class="shot-tab" type="button" data-shot="2">ARTH AI</button>
-      </div>
-      <div class="lap-badge" style="position:absolute; top:-20px; right:-14px; animation:fisFloat 5s ease-in-out infinite;">
-        <div style="background:#FFFFFF; border:1px solid #E0DAC7; border-radius:10px; padding:9px 13px; box-shadow:0 12px 30px -18px rgba(18,37,26,0.4); font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#0E5A2F;"><span style="color:#178A43;">✓</span> Bill parsed · ₹1,38,900 · 96% conf.</div>
-      </div>
-      <div class="lap-badge" style="position:absolute; bottom:48px; left:-24px; animation:fisFloat2 6s ease-in-out infinite;">
-        <div style="background:#12251A; border:1px solid #234631; color:#FBFCFA; border-radius:10px; padding:9px 13px; box-shadow:0 12px 30px -18px rgba(0,0,0,0.5); font-family:'IBM Plex Mono',monospace; font-size:10.5px;"><span style="color:#E9B949;">ARTH</span> · e-Way Bill 4712… expires in 36 h</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -595,46 +580,37 @@
     });
   }
 
-  // 3) Laptop screenshot deck. The laptop lives in the hero, on screen from the moment
-  // the page loads, so there is no scroll runway to drive it — it advances on a timer
-  // like the ticker above. Pauses on hover so a shot can be read, and hands over for
-  // good the moment someone picks a tab themselves.
-  var deck = document.getElementById('laptop');
-  var shots = document.querySelectorAll('.shot');
-  var tabs = document.querySelectorAll('.shot-tab');
-  var urlEl = document.getElementById('shot-url');
-  if (deck && shots.length) {
-    var cur = 0, timer = null;
-
-    function show(i) {
-      if (i === cur) return;
-      cur = i;
-      shots[i].classList.add('on');
-      tabs[i].classList.add('on');
-      for (var j = 0; j < shots.length; j++) {
-        if (j === i) continue;
-        shots[j].classList.remove('on');
-        tabs[j].classList.remove('on');
-      }
-      urlEl.textContent = shots[i].dataset.url;
+  // 3) Hero film. Sound is on by default, but browsers refuse autoplay with sound until the
+  // visitor has clicked, tapped or pressed a key on the page. If play() is refused, start
+  // muted and turn sound on at that first interaction — unless they've muted it themselves.
+  // Plays only while on screen; never autoplays under reduced motion.
+  var film = document.querySelector('.film');
+  var snd = document.querySelector('.film-sound');
+  if (film && snd) {
+    var wantSound = true;
+    function setMuted(m) { film.muted = m; snd.setAttribute('aria-pressed', String(!m)); }
+    function start() {
+      setMuted(!wantSound);
+      film.play().catch(function () { setMuted(true); film.play().catch(function () {}); });
     }
-
-    function play() {
-      if (!timer) timer = setInterval(function () { show((cur + 1) % shots.length); }, 4200);
+    function unlock(e) {
+      document.removeEventListener('pointerdown', unlock, true);
+      document.removeEventListener('keydown', unlock, true);
+      if (e.target.closest && e.target.closest('.film-sound')) return; // the button handles itself
+      if (wantSound) setMuted(false);
     }
-    function pause() { clearInterval(timer); timer = null; }
-
-    for (var k = 0; k < tabs.length; k++) {
-      tabs[k].addEventListener('click', function (e) {
-        pause();                          // their pick wins — stop cycling for good
-        deck.removeEventListener('mouseleave', play);
-        show(Number(e.currentTarget.dataset.shot));
-      });
+    document.addEventListener('pointerdown', unlock, true);
+    document.addEventListener('keydown', unlock, true);
+    snd.addEventListener('click', function () {
+      wantSound = film.muted;
+      setMuted(!wantSound);
+      if (wantSound) film.play().catch(function () {});
+    });
+    if (!reduce && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) start(); else film.pause();
+      }, { threshold: 0.25 }).observe(film);
     }
-    deck.addEventListener('mouseenter', pause);
-    deck.addEventListener('mouseleave', play);
-    // Reduced motion: no cycling. Shot 0 stays put and the tabs still switch by hand.
-    if (!reduce) play();
   }
 
   // 4) This page's mobile-menu links are same-page anchors, so nothing reloads to close
